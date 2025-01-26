@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mark</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        function toggleSection(id) {
+            const section = document.getElementById(id);
+            section.classList.toggle('hidden');
+        }
+    </script>
+</head>
+<body class="bg-gray-100">
+    <div class="container mx-auto p-4">
+        <h1 class="text-4xl font-bold text-center mb-8">Mark</h1>
+
+        <div class="bg-white p-6 rounded-lg shadow-lg">
+            <h2 class="text-2xl font-semibold mb-4">Author & Title:</h2>
+            <p class="text-gray-700 mb-6">
+                Widespread evidence from the early church fathers affirms that Peter passed on reports of the words 
+                and deeds of Jesus to his attendant and writer, John Mark. Of particular significance in this regard are the brief 
+                statements by Papias (Bishop of Hierapolis; C.A.D. 120), preserved by Eusebius of Caesarea (260-340). Papias states that 
+                he received oral tradition from John the elder and apostle, and he passes on the following regarding Mark: 
+                (1) he was the writer for Peter; (2) he wrote down accurately as much as he could remember of Peter's words, 
+                which the latter had adapted to the needs of the moment; (3) he was not an eyewitness of Jesus, nor a disciple 
+                (but see note on Mark 14:52); and (4) it was his desire not to omit or misrepresent anything. 
+                Papias concluded that the Gospel of Mark gains its apostolic and reliable character from its Petrine origin 
+                (<span class="italic">Eusebius, Ecclesiastical History 2.15.1-2; 3.39.14-16</span>).
+                <br><br>
+                Internal evidence also supports the Patristic testimony that Peter stands behind Mark's Gospel. Mark's account 
+                is especially vivid when recounting incidents involving Peter. It presents the weaknesses of Peter, as well as 
+                the disciples as a whole, and omits praiseworthy or noticeable references to Peter reported in Matthew and Luke. 
+                It has also been observed that there exists a certain structural proximity between Peter's Caesarea speech 
+                (<span class="italic">Acts 10:34-43</span>) and the Gospel of Mark. <span class="text-sm text-gray-500">[ESVSB pg. 1889]</span>
+            </p>
+
+            <h2 class="text-2xl font-semibold mb-4">Date & Location:</h2>
+            <p class="text-gray-700 mb-6">
+                The external and internal data most convincingly point to Rome as the place of composition and a date for Mark in the 
+                mid- to late-50s A.D. (but some scholars date it in the mid- or late-60s; see below). The argument in favor of the 
+                mid- to late-50s is that the book of Acts ends with Paul in prison c. A.D. 62, leading many scholars to believe that Acts 
+                was written around that time. (Others suggest that Acts does not end at the point it was written because the key point of Acts 
+                is that the gospel had made it to Rome.) If Acts was written in the early 60s, then Luke's Gospel was written before Acts 
+                (<span class="italic">cf. Luke 1:3 with Acts 1:1</span>), sometime in the early 60s. And if Luke depends on Mark's Gospel for much of his material and 
+                overall structure (the clear majority view among scholars today), then Mark was written before Luke. This would place Mark in the 
+                mid- to late-50s. <span class="text-sm text-gray-500">[ESVSB pg. 1889-1890]</span>
+            </p>
+
+            <h2 class="text-2xl font-semibold mb-4">Theme:</h2>
+            <p class="text-gray-700 mb-6">
+                The ultimate purpose and theme of Mark is to present and defend Jesus' universal call to discipleship. 
+                Mark returns often to this theme, and as the narrative unfolds he categorizes his main audience as either followers or opponents of Jesus. 
+                This implies that discipleship for Mark is essentially a relationship with Jesus, not merely following a certain code of conduct. 
+                Fellowship with Jesus marks the heart of the disciple's life, and this fellowship includes trusting him, confessing him, 
+                taking note of his conduct, following his teaching, and being shaped by a relationship to him. Discipleship also means 
+                being prepared to face the kind of rejection that Jesus faced. <span class="text-sm text-gray-500">[ESVSB pg. 1891-1892]</span>
+            </p>
+
+            <h2 class="text-2xl font-semibold mb-4">Outline:</h2>
+            <p class="text-gray-700 mb-6">
+                <!-- Add timeline or detailed outline here -->
+            </p>
+
+            <h2 class="text-2xl font-semibold mb-4">Chapters:</h2>
+            <div class="text-gray-700 space-y-4">
+                <!-- Chapter 1 -->
+                <button onclick="toggleSection('chapter-1')" class="block text-blue-500 underline w-full text-left text-lg font-bold">
+                    Mark 1 (empty)
+                </button>
+                <div id="chapter-1" class="hidden bg-gray-100 p-4 rounded-lg">
+                    <!-- Empty content for Chapter 1 -->
+                </div>
+
+                <!-- Chapter 2 -->
+                <button onclick="toggleSection('chapter-2')" class="block text-blue-500 underline w-full text-left text-lg font-bold">
+                    Mark 2 (empty)
+                </button>
+                <div id="chapter-2" class="hidden bg-gray-100 p-4 rounded-lg">
+                    <!-- Empty content for Chapter 2 -->
+                </div>
+
+                <!-- Repeat for remaining chapters -->
+                <!-- Chapter 16 -->
+                <button onclick="toggleSection('chapter-16')" class="block text-blue-500 underline w-full text-left text-lg font-bold">
+                    Mark 16 (empty)
+                </button>
+                <div id="chapter-16" class="hidden bg-gray-100 p-4 rounded-lg">
+                    <!-- Empty content for Chapter 16 -->
+                </div>
+            </div>
+
+            <div class="flex justify-between mt-8">
+                <a href="../nt/Matthew.html" class="text-blue-500 underline">Previous: 40 Matthew</a>
+                <a href="../index.html" class="text-blue-500 underline text-center">Table of Contents</a>
+                <a href="../nt/Luke.html" class="text-blue-500 underline">Next: 42/3 Luke</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
