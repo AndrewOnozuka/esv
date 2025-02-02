@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>John</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        function toggleChapter(chapter) {
+            let existingContent = document.getElementById(`chapter-content-${chapter}`);
+    
+            // If content already exists, remove it (toggle off)
+            if (existingContent) {
+                existingContent.remove();
+                return;
+            }
+    
+            console.log(`Fetching: ./${chapter}.html`);  // Debugging log
+    
+            // Fetch and load the chapter content
+            fetch(`./${chapter}.html`) // Adjusted path to force relative fetching
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! Status: ${response.status}`);
+                    }
+                    return response.text();
+                })
+                .then(data => {
+                    console.log(`Loaded content for chapter ${chapter}`);
+    
+                    // Create new div for chapter content
+                    let newContent = document.createElement("div");
+                    newContent.id = `chapter-content-${chapter}`;
+                    newContent.className = "bg-white p-6 rounded-lg shadow-lg col-span-full";
+                    newContent.innerHTML = data;
+    
+                    // Find the clicked button
+                    let button = document.getElementById(`chapter-btn-${chapter}`);
+                    console.log("Button parent node:", button.parentNode);
+    
+                    // Insert content **after** the button
+                    button.parentNode.insertBefore(newContent, button.nextSibling);
+    
+                    // Update URL without refreshing
+                    window.history.pushState({}, "", `./${chapter}.html`);
+                })
+                .catch(error => {
+                    console.error("Error loading chapter:", error);
+                    alert("Error loading chapter. Check Console.");
+                });
+        }
+    </script>
+
+</head>
+<body class="bg-gray-100">
+    <div class="container mx-auto p-4">
+        <h1 class="text-4xl font-bold text-center mb-8">John</h1>
+
+        <h2 class="text-2xl font-semibold mb-4">Chapters:</h2>
+
+        <!-- Grid for Chapter Links -->
+        <div class="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-10 gap-2 mb-6">
+            <button id="chapter-btn-1" onclick="toggleChapter(1)" class="bg-blue-500 text-white font-semibold py-2 px-4 rounded-lg w-full text-center">1</button>
+            <button id="chapter-btn-2" onclick="toggleChapter(2)" class="bg-blue-500 text-white font-semibold py-2 px-4 rounded-lg w-full text-center">2</button>
+            <button id="chapter-btn-3" onclick="toggleChapter(3)" class="bg-blue-500 text-white font-semibold py-2 px-4 rounded-lg w-full text-center">3</button>
+            <button id="chapter-btn-4" onclick="toggleChapter(4)" class="bg-blue-500 text-white font-semibold py-2 px-4 rounded-lg w-full text-center">4</button>
+            <button id="chapter-btn-5" onclick="toggleChapter(5)" class="bg-blue-500 text-white font-semibold py-2 px-4 rounded-lg w-full text-center">5</button>
+            <button id="chapter-btn-6" onclick="toggleChapter(6)" class="bg-blue-500 text-white font-semibold py-2 px-4 rounded-lg w-full text-center">6</button>
+            <button id="chapter-btn-7" onclick="toggleChapter(7)" class="bg-blue-500 text-white font-semibold py-2 px-4 rounded-lg w-full text-center">7</button>
+            <button id="chapter-btn-8" onclick="toggleChapter(8)" class="bg-blue-500 text-white font-semibold py-2 px-4 rounded-lg w-full text-center">8</button>
+            <button id="chapter-btn-9" onclick="toggleChapter(9)" class="bg-blue-500 text-white font-semibold py-2 px-4 rounded-lg w-full text-center">9</button>
+            <button id="chapter-btn-10" onclick="toggleChapter(10)" class="bg-blue-500 text-white font-semibold py-2 px-4 rounded-lg w-full text-center">10</button>
+        </div>
+
+        <div class="flex justify-between mt-8">
+            <a href="../Luke/index.html" class="text-blue-500 underline">Previous: Luke</a>
+            <a href="../index.html" class="text-blue-500 underline text-center">Table of Contents</a>
+            <a href="../Acts/index.html" class="text-blue-500 underline">Next: Acts</a>
+        </div>
+    </div>
+</body>
+</html>

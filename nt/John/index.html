@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>John</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        let openChapters = [];
+    
+        function toggleChapter(chapter) {
+            let existingContent = document.getElementById(`chapter-content-${chapter}`);
+    
+            // If content already exists, remove it (toggle off)
+            if (existingContent) {
+                existingContent.remove();
+                openChapters = openChapters.filter(ch => ch !== chapter);
+                updateCollapseButton();
+                return;
+            }
+    
+            // Fetch and load the chapter content
+            fetch(`./${chapter}.html`)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error("Chapter not found.");
+                    }
+                    return response.text();
+                })
+                .then(data => {
+                    // Create a new div for chapter content
+                    let newContent = document.createElement("div");
+                    newContent.id = `chapter-content-${chapter}`;
+                    newContent.className = "bg-white p-6 rounded-lg shadow-lg col-span-full mt-4";
+                    newContent.innerHTML = data;
+    
+                    // Maintain order of open chapters
+                    openChapters.push(chapter);
+                    openChapters.sort((a, b) => a - b);
+    
+                    let chapterGrid = document.getElementById("chapter-grid");
+                    let buttons = Array.from(chapterGrid.children);
+                    let chapterButton = document.getElementById(`chapter-btn-${chapter}`);
+    
+                    let cols = getComputedStyle(chapterGrid).gridTemplateColumns.split(" ").length;
+                    let buttonIndex = buttons.indexOf(chapterButton);
+                    let rowStartIndex = Math.floor(buttonIndex / cols) * cols;
+    
+                    // Find the correct insertion point (last button in the row of the smallest open chapter)
+                    let lastButtonInRow = buttons[rowStartIndex + cols - 1] || buttons[buttons.length - 1];
+    
+                    // Find where to insert to maintain order
+                    let lastInserted = null;
+                    for (let ch of openChapters) {
+                        let chContent = document.getElementById(`chapter-content-${ch}`);
+                        if (chContent) lastInserted = chContent;
+                    }
+    
+                    if (lastInserted) {
+                        lastInserted.parentNode.insertBefore(newContent, lastInserted.nextSibling);
+                    } else {
+                        lastButtonInRow.parentNode.insertBefore(newContent, lastButtonInRow.nextSibling);
+                    }
+    
+                    updateCollapseButton();
+                })
+                .catch(error => {
+                    console.error("Error loading chapter:", error);
+                });
+        }
+    
+        function collapseAll() {
+            openChapters.forEach(chapter => {
+                let existingContent = document.getElementById(`chapter-content-${chapter}`);
+                if (existingContent) existingContent.remove();
+            });
+            openChapters = [];
+            updateCollapseButton();
+        }
+    
+        function updateCollapseButton() {
+            let collapseBtn = document.getElementById("collapse-button");
+            if (openChapters.length >= 2) {
+                collapseBtn.classList.remove("hidden");
+            } else {
+                collapseBtn.classList.add("hidden");
+            }
+        }
+    </script>
+</head>
+<body class="bg-gray-100">
+    <div class="container mx-auto p-4">
+        <h1 class="text-4xl font-bold text-center mb-8">John</h1>
+
+        <div class="flex justify-between items-center mb-4">
+            <h2 class="text-2xl font-semibold">Chapters:</h2>
+            <button id="collapse-button" onclick="collapseAll()" class="bg-red-500 text-white px-4 py-2 rounded-lg text-sm hidden">
+                Collapse All
+            </button>
+        </div>
+
+        <!-- Grid for Chapter Links -->
+        <div id="chapter-grid" class="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-10 gap-2 mb-6">
+            <button id="chapter-btn-1" onclick="toggleChapter(1)" class="bg-blue-500 text-white py-2 px-4 rounded-lg w-full">1</button>
+            <button id="chapter-btn-2" onclick="toggleChapter(2)" class="bg-blue-500 text-white py-2 px-4 rounded-lg w-full">2</button>
+            <button id="chapter-btn-3" onclick="toggleChapter(3)" class="bg-blue-500 text-white py-2 px-4 rounded-lg w-full">3</button>
+            <button id="chapter-btn-4" onclick="toggleChapter(4)" class="bg-blue-500 text-white py-2 px-4 rounded-lg w-full">4</button>
+            <button id="chapter-btn-5" onclick="toggleChapter(5)" class="bg-blue-500 text-white py-2 px-4 rounded-lg w-full">5</button>
+            <button id="chapter-btn-6" onclick="toggleChapter(6)" class="bg-blue-500 text-white py-2 px-4 rounded-lg w-full">6</button>
+            <button id="chapter-btn-7" onclick="toggleChapter(7)" class="bg-blue-500 text-white py-2 px-4 rounded-lg w-full">7</button>
+            <button id="chapter-btn-8" onclick="toggleChapter(8)" class="bg-blue-500 text-white py-2 px-4 rounded-lg w-full">8</button>
+            <button id="chapter-btn-9" onclick="toggleChapter(9)" class="bg-blue-500 text-white py-2 px-4 rounded-lg w-full">9</button>
+            <button id="chapter-btn-10" onclick="toggleChapter(10)" class="bg-blue-500 text-white py-2 px-4 rounded-lg w-full">10</button>
+            <button id="chapter-btn-11" onclick="toggleChapter(11)" class="bg-blue-500 text-white py-2 px-4 rounded-lg w-full">11</button>
+            <button id="chapter-btn-12" onclick="toggleChapter(12)" class="bg-blue-500 text-white py-2 px-4 rounded-lg w-full">12</button>
+            <button id="chapter-btn-13" onclick="toggleChapter(13)" class="bg-blue-500 text-white py-2 px-4 rounded-lg w-full">13</button>
+            <button id="chapter-btn-14" onclick="toggleChapter(14)" class="bg-blue-500 text-white py-2 px-4 rounded-lg w-full">14</button>
+            <button id="chapter-btn-15" onclick="toggleChapter(15)" class="bg-blue-500 text-white py-2 px-4 rounded-lg w-full">15</button>
+            <button id="chapter-btn-16" onclick="toggleChapter(16)" class="bg-blue-500 text-white py-2 px-4 rounded-lg w-full">16</button>
+            <button id="chapter-btn-17" onclick="toggleChapter(17)" class="bg-blue-500 text-white py-2 px-4 rounded-lg w-full">17</button>
+            <button id="chapter-btn-18" onclick="toggleChapter(18)" class="bg-blue-500 text-white py-2 px-4 rounded-lg w-full">18</button>
+            <button id="chapter-btn-19" onclick="toggleChapter(19)" class="bg-blue-500 text-white py-2 px-4 rounded-lg w-full">19</button>
+            <button id="chapter-btn-20" onclick="toggleChapter(20)" class="bg-blue-500 text-white py-2 px-4 rounded-lg w-full">20</button>
+            <button id="chapter-btn-21" onclick="toggleChapter(21)" class="bg-blue-500 text-white py-2 px-4 rounded-lg w-full">21</button>
+        </div>
+
+        <div class="flex justify-between mt-8">
+            <a href="../Luke/index.html" class="text-blue-500 underline">Previous: Luke</a>
+            <a href="../index.html" class="text-blue-500 underline text-center">Table of Contents</a>
+            <a href="../Acts/index.html" class="text-blue-500 underline">Next: Acts</a>
+        </div>
+    </div>
+</body>
+</html>

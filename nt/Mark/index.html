@@ -6,9 +6,46 @@
     <title>Mark</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
-        function toggleSection(id) {
-            const section = document.getElementById(id);
-            section.classList.toggle('hidden');
+        function toggleChapter(chapter) {
+            let existingContent = document.getElementById(`chapter-content-${chapter}`);
+
+            // If content already exists, remove it (toggle off)
+            if (existingContent) {
+                existingContent.remove();
+                return;
+            }
+
+            // Fetch and load the chapter content
+            fetch(`./${chapter}.html`)
+                .then(response => response.text())
+                .then(data => {
+                    // Create a new div for chapter content
+                    let newContent = document.createElement("div");
+                    newContent.id = `chapter-content-${chapter}`;
+                    newContent.className = "bg-white p-6 rounded-lg shadow-lg col-span-full mt-4";
+                    newContent.innerHTML = data;
+
+                    // Find the correct row to insert content below
+                    let button = document.getElementById(`chapter-btn-${chapter}`);
+                    let parentGrid = document.getElementById("chapter-grid");
+
+                    // Get all chapter buttons
+                    let buttons = Array.from(parentGrid.children);
+                    let buttonIndex = buttons.indexOf(button);
+
+                    // Find the row start index based on column layout
+                    let cols = getComputedStyle(parentGrid).gridTemplateColumns.split(" ").length;
+                    let rowStartIndex = Math.floor(buttonIndex / cols) * cols;
+
+                    // Find the last button in the row
+                    let lastButtonInRow = buttons[rowStartIndex + cols - 1] || buttons[buttons.length - 1];
+
+                    // Insert content below the last button in the row
+                    lastButtonInRow.parentNode.insertBefore(newContent, lastButtonInRow.nextSibling);
+                })
+                .catch(error => {
+                    alert("Error loading chapter.");
+                });
         }
     </script>
 </head>
@@ -17,6 +54,7 @@
         <h1 class="text-4xl font-bold text-center mb-8">Mark</h1>
 
         <div class="bg-white p-6 rounded-lg shadow-lg">
+            <!-- Author & Title Section -->
             <h2 class="text-2xl font-semibold mb-4">Author & Title:</h2>
             <p class="text-gray-700 mb-6">
                 Widespread evidence from the early church fathers affirms that Peter passed on reports of the words and deeds of Jesus to his attendant and writer, John Mark. 
@@ -33,6 +71,7 @@
                 (<span class="italic">Acts 10:34-43</span>) and the Gospel of Mark. <span class="text-sm text-gray-500">[ESVSB pg. 1889]</span>
             </p>
 
+            <!-- Date & Location Section -->
             <h2 class="text-2xl font-semibold mb-4">Date & Location:</h2>
             <p class="text-gray-700 mb-6">
                 The external and internal data most convincingly point to Rome as the place of composition and a date for Mark in the mid- to late-50s A.D. 
@@ -61,6 +100,7 @@
                 So a date in the mid- to late-50s is most likely, but a date in the mid-60s is possible. <span class="text-sm text-gray-500">[ESVSB pg. 1889-1890]</span>
             </p>
 
+            <!-- Theme Section -->
             <h2 class="text-2xl font-semibold mb-4">Theme:</h2>
             <p class="text-gray-700 mb-6">
                 The ultimate purpose and theme of Mark is to present and defend Jesus' universal call to discipleship. 
@@ -76,38 +116,32 @@
                 <!-- Add timeline or detailed outline here -->
             </p>
 
+            <!-- Chapters Section -->
             <h2 class="text-2xl font-semibold mb-4">Chapters:</h2>
-            <div class="text-gray-700 space-y-4">
-                <!-- Chapter 1 -->
-                <button onclick="toggleSection('chapter-1')" class="block text-blue-500 underline w-full text-left text-lg font-bold">
-                    Mark 1 (empty)
-                </button>
-                <div id="chapter-1" class="hidden bg-gray-100 p-4 rounded-lg">
-                    <!-- Empty content for Chapter 1 -->
-                </div>
 
-                <!-- Chapter 2 -->
-                <button onclick="toggleSection('chapter-2')" class="block text-blue-500 underline w-full text-left text-lg font-bold">
-                    Mark 2 (empty)
-                </button>
-                <div id="chapter-2" class="hidden bg-gray-100 p-4 rounded-lg">
-                    <!-- Empty content for Chapter 2 -->
-                </div>
-
-                <!-- Repeat for remaining chapters -->
-                <!-- Chapter 16 -->
-                <button onclick="toggleSection('chapter-16')" class="block text-blue-500 underline w-full text-left text-lg font-bold">
-                    Mark 16 (empty)
-                </button>
-                <div id="chapter-16" class="hidden bg-gray-100 p-4 rounded-lg">
-                    <!-- Empty content for Chapter 16 -->
-                </div>
+            <div id="chapter-grid" class="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-10 gap-2 mb-6">
+                <button id="chapter-btn-1" onclick="toggleChapter(1)" class="bg-blue-500 text-white py-2 px-4 rounded-lg w-full">1</button>
+                <button id="chapter-btn-2" onclick="toggleChapter(2)" class="bg-blue-500 text-white py-2 px-4 rounded-lg w-full">2</button>
+                <button id="chapter-btn-3" onclick="toggleChapter(3)" class="bg-blue-500 text-white py-2 px-4 rounded-lg w-full">3</button>
+                <button id="chapter-btn-4" onclick="toggleChapter(4)" class="bg-blue-500 text-white py-2 px-4 rounded-lg w-full">4</button>
+                <button id="chapter-btn-5" onclick="toggleChapter(5)" class="bg-blue-500 text-white py-2 px-4 rounded-lg w-full">5</button>
+                <button id="chapter-btn-6" onclick="toggleChapter(6)" class="bg-blue-500 text-white py-2 px-4 rounded-lg w-full">6</button>
+                <button id="chapter-btn-7" onclick="toggleChapter(7)" class="bg-blue-500 text-white py-2 px-4 rounded-lg w-full">7</button>
+                <button id="chapter-btn-8" onclick="toggleChapter(8)" class="bg-blue-500 text-white py-2 px-4 rounded-lg w-full">8</button>
+                <button id="chapter-btn-9" onclick="toggleChapter(9)" class="bg-blue-500 text-white py-2 px-4 rounded-lg w-full">9</button>
+                <button id="chapter-btn-10" onclick="toggleChapter(10)" class="bg-blue-500 text-white py-2 px-4 rounded-lg w-full">10</button>
+                <button id="chapter-btn-1" onclick="toggleChapter(11)" class="bg-blue-500 text-white py-2 px-4 rounded-lg w-full">11</button>
+                <button id="chapter-btn-2" onclick="toggleChapter(12)" class="bg-blue-500 text-white py-2 px-4 rounded-lg w-full">12</button>
+                <button id="chapter-btn-3" onclick="toggleChapter(13)" class="bg-blue-500 text-white py-2 px-4 rounded-lg w-full">13</button>
+                <button id="chapter-btn-4" onclick="toggleChapter(14)" class="bg-blue-500 text-white py-2 px-4 rounded-lg w-full">14</button>
+                <button id="chapter-btn-5" onclick="toggleChapter(15)" class="bg-blue-500 text-white py-2 px-4 rounded-lg w-full">15</button>
+                <button id="chapter-btn-6" onclick="toggleChapter(16)" class="bg-blue-500 text-white py-2 px-4 rounded-lg w-full">16</button>
             </div>
 
             <div class="flex justify-between mt-8">
-                <a href="../nt/Matthew.html" class="text-blue-500 underline">Previous: 40 Matthew</a>
-                <a href="../index.html" class="text-blue-500 underline text-center">Table of Contents</a>
-                <a href="../nt/Luke.html" class="text-blue-500 underline">Next: 42/3 Luke</a>
+                <a href="../Matthew/index.html" class="text-blue-500 underline">Previous: 40 Matthew</a>
+                <a href="../../index.html" class="text-blue-500 underline text-center">Table of Contents</a>
+                <a href="../Luke/index.html" class="text-blue-500 underline">Next: 42/3 Luke</a>
             </div>
         </div>
     </div>
