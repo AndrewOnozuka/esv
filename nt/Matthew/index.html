@@ -5,67 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Matthew</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        function toggleChapter(chapter) {
-            let existingContent = document.getElementById(`chapter-content-${chapter}`);
-
-            // If content already exists, remove it (toggle off)
-            if (existingContent) {
-                existingContent.remove();
-                updateCollapseButton();
-                return;
-            }
-
-            // Fetch and load the chapter content
-            fetch(`./${chapter}.html`)
-                .then(response => response.text())
-                .then(data => {
-                    // Create a new div for chapter content
-                    let newContent = document.createElement("div");
-                    newContent.id = `chapter-content-${chapter}`;
-                    newContent.className = "bg-white p-6 rounded-lg shadow-lg col-span-full mt-4";
-                    newContent.innerHTML = data;
-
-                    // Find the correct row to insert content below
-                    let button = document.getElementById(`chapter-btn-${chapter}`);
-                    let parentGrid = document.getElementById("chapter-grid");
-
-                    // Get all chapter buttons
-                    let buttons = Array.from(parentGrid.children);
-                    let buttonIndex = buttons.indexOf(button);
-
-                    // Find the row start index based on column layout
-                    let cols = getComputedStyle(parentGrid).gridTemplateColumns.split(" ").length;
-                    let rowStartIndex = Math.floor(buttonIndex / cols) * cols;
-
-                    // Find the last button in the row
-                    let lastButtonInRow = buttons[rowStartIndex + cols - 1] || buttons[buttons.length - 1];
-
-                    // Insert content below the last button in the row
-                    lastButtonInRow.parentNode.insertBefore(newContent, lastButtonInRow.nextSibling);
-
-                    updateCollapseButton();
-                })
-                .catch(error => {
-                    alert("Error loading chapter.");
-                });
-        }
-
-        function collapseAllChapters() {
-            document.querySelectorAll('[id^="chapter-content-"]').forEach(el => el.remove());
-            updateCollapseButton();
-        }
-
-        function updateCollapseButton() {
-            let openChapters = document.querySelectorAll('[id^="chapter-content-"]').length;
-            let collapseButton = document.getElementById("collapse-all-btn");
-            if (openChapters > 1) {
-                collapseButton.classList.remove("hidden");
-            } else {
-                collapseButton.classList.add("hidden");
-            }
-        }
-    </script>
+    <script src="../../dynamicRows.js" defer></script>  <!-- Make sure defer is included -->
 </head>
 <body class="bg-gray-100">
     <div class="container mx-auto p-4">
@@ -124,7 +64,7 @@
 
             <div class="flex justify-between items-center mb-4">
                 <h2 class="text-2xl font-semibold">Chapters:</h2>
-                <button id="collapse-all-btn" onclick="collapseAllChapters()" class="hidden bg-red-500 text-white py-2 px-4 rounded-lg">
+                <button id="collapse-button" onclick="collapseAll()" class="bg-red-500 text-white px-4 py-2 rounded-lg text-sm hidden">
                     Collapse All
                 </button>
             </div>
